@@ -1,0 +1,32 @@
+MODIFICHE Kitten.lex
+- riga 198 "<YYINITIAL>test"
+- riga 199 "<YYINITIAL>fixture"
+- riga 200 "<YYINITIAL>assert"
+
+MODIFICHE Kitten.cup
+- riga 71 "TEST, FIXTURE, ASSERT;"
+- riga 166 "| TEST:t "
+- riga 168 "| FIXTURE:x "
+- riga 214 "| ASSERT:a "
+
+MODIFICHE sym.java
+- "public static final int TEST = 51;"
+- "public static final int FIXTURE = 52;"
+- "public static final int ASSERT = 53;"
+
+AGGIUNTA TestDeclaration.java in absyn
+AGGIUNTA FixtureDeclaration.java in absyn
+AGGIUNTA Assert in absyn
+
+MODIFICHE ClassType.java in types
+- riga 67 "FixtureSignature"
+- riga 81 "TestSignature"
+- riga 308 "addFixture"
+- riga 337 "addTest"
+- riga 375 "Set<FixtureSignature>"
+- riga 395 "Map<String, Set<TestSignature>>"
+- riga 444 "Set<FixtureSignature> fixturesLookup()"
+- riga 505 "TestSignature testLookup(String name)"
+
+AGGIUNTA TestSignature.java in types
+AGGIUNTA FixtureSignature.java in types
