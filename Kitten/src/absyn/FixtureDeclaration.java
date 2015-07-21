@@ -25,10 +25,6 @@ public class FixtureDeclaration extends CodeDeclaration {
 	 *         Yields {@code null} if type-checking has not been performed yet
 	 */
 
-	/*@Override
-	public FixtureSignature getSignature() {
-		return (FixtureSignature) super.getSignature();
-	}*/
 
 	@Override
 	protected void toDotAux(FileWriter where) throws IOException {
@@ -49,23 +45,24 @@ public class FixtureDeclaration extends CodeDeclaration {
 		
 		clazz.addFixture(fSig);
 		
-		// we record the signature of this fixture inside this abstract syntax
+		//salviamo la firma di questa fixture nella sintassi astratta
 		setSignature(fSig);
 	}
 	
 	@Override
+	//implementa le operazioni specifiche alla singola espressione
 	protected void typeCheckAux(ClassType clazz) {
 		TypeChecker checker = new TypeChecker(VoidType.INSTANCE, clazz.getErrorMsg());
 		checker = checker.putVar("this", clazz);
 		
-		// we type-check the body of the constructor in the resulting type-checker
+		// facciamo il type-check del corpo del costruttore nel type-checker risultante
 		getBody().typeCheck(checker);
 
-		// we check that there is no dead-code in the body of the constructor
+		// notiamo che non c'è dead-code nel corpo del costruttore 
 		getBody().checkForDeadcode();
 		
-		// fixtures return nothing, so that we do not check whether
-		// a return statement is always present at the end of every
-		// syntactical execution path in the body of a fixture
+		//le fixtures restituiscono nulla, così che non controlliamo se 
+		//una dichiarazione di ritorno è sempre presente alla fine di ogni 
+		//percorso di esecuzione sintattico nel corpo di una fixture
 	}
 }

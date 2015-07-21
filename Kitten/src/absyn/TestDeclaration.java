@@ -82,18 +82,20 @@ public class TestDeclaration extends CodeDeclaration {
 	}
 
 	@Override
+	//implementa le operazioni specifiche alla singola espressione
 	protected void typeCheckAux(ClassType clazz) {
 		TypeChecker checker = new TypeChecker(VoidType.INSTANCE, clazz.getErrorMsg(), true);
 
-		// we type-check the body of the test in the resulting type-checking
+		//facciamo il type-check del corpo del test nel risultante type-checking
 		getBody().typeCheck(checker);
 
-		// we check that there is no dead code in the body of the test
+		// notiamo che non c'èdead-code nel corpo del test
 		getBody().checkForDeadcode();
-
-		// tests return nothing, so that we do not check whether
-		// a return statement is always present at the end of every
-		// syntactical execution path in the body of a test
+		
+		// i test ritornano nulla, così che non dobbiamo notare
+		// se è sempre presente un return alla fine di ogni percorso di esecuzione sintattica
+		// nel corpo del test
+		
 	}
 
 	public void translate(Set<ClassMemberSignature> done) {
@@ -110,22 +112,4 @@ public class TestDeclaration extends CodeDeclaration {
 		}
 	}
 	
-	/*private void translateReferenced(Block block, Set<ClassMemberSignature> done, Set<Block> blocksDone) {
-    	// if we already processed the block, we return immediately
-    	if (!blocksDone.add(block))
-    		return;
-    	for (BytecodeList cursor = block.getBytecode(); cursor != null; cursor = cursor.getTail()) {
-    		Bytecode h = cursor.getHead();
-    		if (h instanceof GETFIELD) 
-    			done.add(((GETFIELD) h).getField());
-    		else if (h instanceof PUTFIELD) 
-    			done.add(((PUTFIELD) h).getField());
-    		else if (h instanceof CALL)
-    			for (CodeSignature callee: ((CALL) h).getDynamicTargets())
-    				callee.getAbstractSyntax().translate(done);
-    	}
-    	// we continue with the following blocks
-    	for (Block follow: block.getFollows())
-    		translateReferenced(follow, done, blocksDone);
-    }*/
 }

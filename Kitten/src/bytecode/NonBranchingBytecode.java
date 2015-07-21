@@ -10,6 +10,8 @@ import org.apache.bcel.generic.InstructionList;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
+// Implementa le istruzioni sequenziali 
+
 public abstract class NonBranchingBytecode extends Bytecode {
 
 	/**

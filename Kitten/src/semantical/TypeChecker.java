@@ -11,6 +11,9 @@ import errorMsg.ErrorMsg;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
+// E' un contenitore di ambienti( l'ambiente è tutto ciò che ci serve per fare l'analisi semantica delle ESPRESSIONI, 
+// al momento) 
+
 public class TypeChecker {
 
 	/**
@@ -38,7 +41,7 @@ public class TypeChecker {
 
 	private final ErrorMsg errorMsg;
 	
-	private final boolean inTest;
+	private final boolean testing;
 
 	/**
 	 * Constructs a type-checker.
@@ -50,12 +53,12 @@ public class TypeChecker {
 	 * @param inTest the environment check
 	 */
 
-	private TypeChecker(Type returnType, Table<TypeAndNumber> env, int varNum, ErrorMsg errorMsg, boolean inTest) {
+	private TypeChecker(Type returnType, Table<TypeAndNumber> env, int varNum, ErrorMsg errorMsg, boolean testing) {
 		this.returnType = returnType;
 		this.env = env;
 		this.varNum = varNum;
 		this.errorMsg = errorMsg;
-		this.inTest = inTest;
+		this.testing=testing; // aggiunti tutti per la valutazione del test
 	}
 
 	/**
@@ -72,7 +75,7 @@ public class TypeChecker {
 		this.env = Table.empty();
 		this.varNum = 0;
 		this.errorMsg = errorMsg;
-		this.inTest = false;
+		this.testing = false;
 	}
 
 	/**
@@ -90,7 +93,7 @@ public class TypeChecker {
 		this.env = Table.empty();
 		this.varNum = 0;
 		this.errorMsg = errorMsg;
-		this.inTest = inTest;
+		this.testing = inTest;
 	}
 	
 	/**
@@ -113,10 +116,10 @@ public class TypeChecker {
 	 */
 
 	public TypeChecker putVar(String var, Type type) {
-		// note that in the new type-checker the number of local
-		// variables is one more than in this type-checker
+		// segna che nel nuovo type-checker il numero di variabili locali è uno in più
+		// rispetto a questo type-checker
 		return new TypeChecker(returnType,
-			env.put(var, new TypeAndNumber(type, varNum)), varNum + 1, errorMsg, inTest);
+			env.put(var, new TypeAndNumber(type, varNum)), varNum + 1, errorMsg, testing);
 	}
 
 	/**
@@ -179,12 +182,12 @@ public class TypeChecker {
 	 * @return true if some error has been reported up to now, false otherwise
 	 */
 
-	public boolean isInTest() {
-		return inTest;
-	}
+	public String calculatePosition(int pos){
+		return errorMsg.calculatePosition(pos);
+	}	
 	
-	public String calcolaPos(int pos){
-		return errorMsg.calcolaPos(pos);
+	public boolean isTesting() {
+		return testing;
 	}
 	
 	public String getFileName(){

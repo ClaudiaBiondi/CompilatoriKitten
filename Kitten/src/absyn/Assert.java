@@ -34,11 +34,12 @@ public class Assert extends Command {
 	}
 
 	@Override
+	// effettua l'analisi semantica specifica a ciascun comando
 	protected TypeChecker typeCheckAux(TypeChecker checker) {
 		asserted.mustBeBoolean(checker);
-		boolean expectedInTest = checker.isInTest();
+		boolean expected = checker.isTesting();
 		
-		if (expectedInTest != true)
+		if (expected != true)
 			error("assert not defined in method test");
 		
 		return checker;
@@ -64,7 +65,7 @@ public class Assert extends Command {
 	}
 	
 	private String makeFailureMessage() {
-		String pos = getTypeChecker().calcolaPos(getPos());
+		String pos = getTypeChecker().calculatePosition(getPos());
 
 		return "Assert fallita a: " + pos;
 	}

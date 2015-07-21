@@ -5,7 +5,13 @@ package tables;
  *
  * @author  <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
+//Table<> è una struttura data che usiamo per rappresentare gli ambienti 
+//Table<E> specifica che un ambiente ha un'operazione di tipo get(key) e di tipo put(key, value)
+//che vengono rispettivamente implementate in NonEmptyTable.java e EmptyTable.java essendo Table classe abstract
+//Ricordiamo che l'ambiente non è altro che una funzione che associa gli ID ai valori denotabilli(posizioni di memoria, 
+//procedure, funzioni)
 
+// Implementa un ambiente in cui c'è un legame per almeno una variabile
 final class NonEmptyTable<E> extends Table<E> {
 
 	/**
@@ -64,6 +70,7 @@ final class NonEmptyTable<E> extends Table<E> {
 
 	@Override
 	public E get(String key) {
+		// permette di leggere il valore di tipo E legato ad una variabile key
 		int comp = this.key.compareTo(key);
 
 		if (comp < 0)
@@ -76,6 +83,9 @@ final class NonEmptyTable<E> extends Table<E> {
 
 	@Override
 	public Table<E> put(String key, E value) {
+		//costruisce un nuovo ambiente in cui la variabile key è legata a value di tipo E
+		//put non è un'operazione distruttiva ma lascia inalterato il vecchio albero 
+		//restituisce un nuovo ambiente con aggiunto un nuovo legame
 		int comp = this.key.compareTo(key);
 
 		if (comp < 0) {

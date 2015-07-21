@@ -62,13 +62,15 @@ public class Block {
 	 * @param bytecode the code inside the block
 	 * @param follows the list of successors of this block
 	 */
-
+	
+	// Il costruttore chiede di specificare la lista di bytecode contenuta nel blocco e la lista
+	// di sucessori del blocco (può essere anche vuota)
 	private Block(BytecodeList bytecode, List<Block> follows) {
 		this.bytecode = bytecode;
 		this.follows = follows;
 		this.mergeable = true;
 
-		// we assign a unique identifier to this block
+		// assegniamo un identificatore unico a questo blocco
 		this.id = counter++;
 	}
 

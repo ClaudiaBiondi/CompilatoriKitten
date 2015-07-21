@@ -12,6 +12,8 @@ import org.apache.bcel.generic.InstructionList;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
+// Implementa le istruzioni di diramazione
+
 public abstract class BranchingBytecode extends Bytecode implements NonCallingBytecode {
 
 	/**

@@ -84,13 +84,13 @@ public class ErrorMsg {
 	 */
 
 	public void error(int pos, String msg) {
-		anyErrors = true; // an error has been reported at least
+		anyErrors = true; // c'è almeno un errore
 
 		String where;
 		if (pos >= 0) {
 			int last = 0, n = 1;
 
-			// we look for the last new line before position pos
+			// guardiamo l'ultima new line prima della posizione pos
 			for (int line: linePos) {
 				if (line >= pos) break;
 
@@ -106,12 +106,12 @@ public class ErrorMsg {
 		System.out.println(fileName + "::" + where + ": " + msg);
 	}
 	
-	public String calcolaPos(int pos) {
+	public String calculatePosition(int pos) {
 		String where;
 		if (pos >= 0) {
 			int last = 0, n = 1;
 
-			// we look for the last new line before position pos
+			// guardiamo l'ultima new line prima della posizione pos
 			for (int line: linePos) {
 				if (line >= pos) break;
 

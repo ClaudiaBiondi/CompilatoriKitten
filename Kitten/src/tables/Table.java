@@ -6,6 +6,11 @@ package tables;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
+//Table<> è una struttura data che usiamo per rappresentare gli ambienti 
+//Table<E> specifica che un ambiente ha un'operazione di tipo get(key) e di tipo put(key, value)
+//che vengono rispettivamente implementate in NonEmptyTable.java e EmptyTable.java essendo Table classe abstract
+//Ricordiamo che l'ambiente non è altro che una funzione che associa gli ID ai valori denotabilli(posizioni di memoria, 
+//procedure, funzioni)
 public abstract class Table<E> {
 
     /**

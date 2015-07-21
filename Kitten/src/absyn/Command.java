@@ -14,6 +14,9 @@ import translation.Block;
  * @author  <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
+// L'analisi semantica di un comando restituisce un ambiente
+
+
 public abstract class Command extends Absyn {
 
 	/**
@@ -90,10 +93,14 @@ public abstract class Command extends Absyn {
 	 * @return a type-checker derived from {@code checker} by type-checking
 	 *         this and the subsequent commands
 	 */
-
+	
+	// implementiamo il metoso di analisi semantica per i comandi 
+	
 	public final TypeChecker typeCheck(TypeChecker checker) {
-		// we perform the command-specific type-checking and record
-		// the resulting type-checker
+
+		// prepariamo  il type-checking del comando specifico 
+		// e memorizziamo il type-checking risultante
+		// --> ci serve per prendere nota del type-checking fatto da typeCheckAux() risultante dall'analisi
 		return this.checker = checker = typeCheckAux(this.checker = checker);
 	}
 
@@ -105,7 +112,7 @@ public abstract class Command extends Absyn {
 	 */
 
 	protected abstract TypeChecker typeCheckAux(TypeChecker checker);
-
+	//le implemento nelle classi figlie TestDeclaratione e FixtureDeclaration
 	/**
 	 * Checks that this command does not contain <i>dead-code</i>, that is,
 	 * commands which can never be executed. This method considers a

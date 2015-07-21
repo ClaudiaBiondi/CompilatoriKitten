@@ -17,7 +17,7 @@ public abstract class Bytecode {
 
     @Override
     public String toString() {
-    	// the name of the class. Subclasses may redefine
+    	// il nome della classe, le sottoclassi devono ridefinirlo
     	return getClass().getSimpleName().toLowerCase();
     }
 }

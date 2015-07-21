@@ -10,6 +10,9 @@ import org.apache.bcel.generic.InstructionList;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
+// Implementa una lista di bytecode che può essere inserita in un blocco di codice (la struttura che implementa tale blocco 
+// è translation/Block.java
+
 public class BytecodeList {
 
     /**
