@@ -33,17 +33,17 @@ public class NormalClassGenerator extends JavaClassGenerator {
 			clazz.getName() + ".kit" // source file
 			);
 
-		// we add the fields
+		// aggiungiamo i campi
 		for (FieldSignature field: clazz.getFields().values())
 			if (sigs.contains(field))
 				field.createField(this);
 
-		// we add the constructors
+		//aggiungiamo i costruttori
 		for (ConstructorSignature constructor: clazz.getConstructors())
 			if (sigs.contains(constructor))
 				constructor.createConstructor(this);
 
-		// we add the methods
+		// aggiungiamo i metodi
 		for (Set<MethodSignature> s: clazz.getMethods().values())
 			for (MethodSignature method: s)
 				if (sigs.contains(method))

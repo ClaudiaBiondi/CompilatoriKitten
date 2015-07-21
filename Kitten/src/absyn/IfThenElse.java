@@ -172,6 +172,6 @@ public class IfThenElse extends Command {
 		// we compile the condition by using as <tt>yes</tt> and <tt>no</tt>
 		// continuations the translations of the <tt>then</tt> and
 		// <tt>_else</tt> components
-		return condition.translateAsTest(then.translate(continuation), _else.translate(continuation));
+		return condition.translateForTesting(then.translate(continuation), _else.translate(continuation));
 	}
 }

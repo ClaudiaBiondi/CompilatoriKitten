@@ -58,11 +58,11 @@ public class FixtureDeclaration extends CodeDeclaration {
 		// facciamo il type-check del corpo del costruttore nel type-checker risultante
 		getBody().typeCheck(checker);
 
-		// notiamo che non c'è dead-code nel corpo del costruttore 
+		// notiamo che non c'e dead-code nel corpo del costruttore 
 		getBody().checkForDeadcode();
 		
-		//le fixtures restituiscono nulla, così che non controlliamo se 
-		//una dichiarazione di ritorno è sempre presente alla fine di ogni 
+		//le fixtures restituiscono nulla, cosi che non controlliamo se 
+		//una dichiarazione di ritorno e sempre presente alla fine di ogni 
 		//percorso di esecuzione sintattico nel corpo di una fixture
 	}
 }

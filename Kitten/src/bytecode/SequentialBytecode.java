@@ -26,7 +26,12 @@ public abstract class SequentialBytecode extends NonBranchingBytecode {
 	 * @return a block of code that contains this bytecode and then {@code continuation}
 	 */
 
+	// richiede di specificare un blocco di codice 
 	public Block followedBy(Block continuation) {
+		//restituisce un blocco ottenuto aggiungendo il bytecode in testa al codice interno 
+		//al blocco del codice
+		
+		//serve per aggiungere un bytecode in cima al blocca di codice
 		return continuation.prefixedBy(this);
 	}
 }

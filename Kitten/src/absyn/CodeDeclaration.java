@@ -119,18 +119,19 @@ public abstract class CodeDeclaration extends ClassMemberDeclaration {
 
     public void translate(Set<ClassMemberSignature> done) {
     	if (done.add(sig)) {
-    		// we translate the body of the constructor or
-    		// method with a block containing RETURN as continuation. This way,
-    		// all methods returning void and
-    		// with some missing return command are correctly
-    		// terminated anyway. If the method is not void, this
-    		// precaution is useless since we know that every execution path
-    		// ends with a return command, as guaranteed by
-    		// checkForDeadCode() (see typeCheck() in MethodDeclaration.java)
+     		
+    		// Traduciamo il corpo del costruttore o
+    	    // Metodo con un blocco contenente RETURN come continuazione . Da questa parte,
+    	    // Tutti i metodi di ritorno vuoto e
+    	    // Con qualche comando ritorno mancanti sono correttamente
+    	    // Terminati comunque . Se il metodo non e nullo , questa
+    	    // Precauzione e inutile poiche sappiamo che ogni percorso di esecuzione
+    	    // Termina con un comando di ritorno , come garantito dal
+    	    // CheckForDeadCode ( ) (vedi TYPECHECK ( ) in MethodDeclaration.java )
     		sig.setCode(getBody().translate(new Block(new RETURN(VoidType.INSTANCE))));
 
-    		// we translate all methods and constructors that are referenced
-    		// from the code we have generated
+    		// traduciamo tutti i metodi e costruttori che sono riferiti 
+    		// al codice generato
     		translateReferenced(sig.getCode(), done, new HashSet<Block>());
     	}
     }
@@ -154,26 +155,26 @@ public abstract class CodeDeclaration extends ClassMemberDeclaration {
 
     		if (h instanceof GETFIELD) {
     			done.add(((GETFIELD) h).getField());
-    			translate2(((GETFIELD) h).getField().getDefiningClass(), done);
+    			translateAux(((GETFIELD) h).getField().getDefiningClass(), done);
     		}
     		else if (h instanceof PUTFIELD) {
     			done.add(((PUTFIELD) h).getField());
-    			translate2(((PUTFIELD) h).getField().getDefiningClass(), done);
+    			translateAux(((PUTFIELD) h).getField().getDefiningClass(), done);
     		}
     		else if (h instanceof CALL) {
     			for (CodeSignature callee: ((CALL)h).getDynamicTargets()) {
     				callee.getAbstractSyntax().translate(done);
-    				translate2(callee.getDefiningClass(), done);
+    				translateAux(callee.getDefiningClass(), done);
     			}
     		}
     	}
 
-    	// we continue with the following blocks
+    	// blocchi successivi
     	for (Block follow: block.getFollows())
     		translateReferenced(follow, done, blocksDone);
     }
     
-    protected void translate2(ClassType clazz, Set<ClassMemberSignature> done) {
+    protected void translateAux(ClassType clazz, Set<ClassMemberSignature> done) {
     	for(ConstructorSignature cms : clazz.getConstructors()){
     		cms.getAbstractSyntax().translate(done);
     	}

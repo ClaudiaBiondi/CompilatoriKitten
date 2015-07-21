@@ -32,17 +32,17 @@ public class TestClassGenerator extends JavaClassGenerator {
 	ClassType clazz;
 	
 	public TestClassGenerator(ClassType clazz, Set<ClassMemberSignature> sigs) {
-		super(clazz.getName() + "Test", // name of the class
-				// the superclass of the Kitten Object class is set to be the Java java.lang.Object class
+		super(clazz.getName() + "Test", //nome della classe
+				// superclasse di Kitten Object class e settata per essere Java java.lang.Object class
 				clazz.getSuperclass() != null ? clazz.getSuperclass().getName() : "java.lang.Object",
 				clazz.getName() + ".kit" // source file
 				);
 
 		this.clazz = clazz;	
-		// we add the tests
+		// aggiungiamo il test
 		for (FixtureSignature fix: clazz.getFixtures())
 			fix.createFixture(this);
-		// we add the fixtures
+		//aggiungiamo le fixture
 		for (TestSignature test: clazz.getTests())
 			test.createTest(this);
 		
@@ -60,15 +60,15 @@ public class TestClassGenerator extends JavaClassGenerator {
 		for (TestSignature test: clazz.getTests()) {
 			InstructionList ilTest;
 			
-			// create the test
+			// creiamo il test
 			ilTest = pgTest(test, clazz.getFixtures());
 			
-			// store the result of the test (0: passed, -1:failed)
+			// salviamo il risultato (0: passed, -1:failed)
 			ilTest.append(InstructionFactory.ILOAD_1);
 			ilTest.append(InstructionFactory.IADD);
 			ilTest.append(InstructionFactory.ISTORE_1);
 
-			// print the time
+			// stampiamo il tempo 
 			pgTime(ilTest);
 			
 			iList.append(ilTest);
@@ -118,7 +118,7 @@ public class TestClassGenerator extends JavaClassGenerator {
 				org.apache.bcel.generic.Type.VOID, // return type
 				new org.apache.bcel.generic.Type[] // parameters
 					{ new org.apache.bcel.generic.ArrayType("java.lang.String", 1) },
-				null, // parameters names: we do not care
+				null, // parameters names: non ci interessa
 				"main", // method's name
 				this.getClassName(), // defining class
 				iList,
@@ -126,13 +126,12 @@ public class TestClassGenerator extends JavaClassGenerator {
 			
 			
 			
-		// we must always call these methods before the getMethod()
-		// method below. They set the number of local variables and stack
-		// elements used by the code of the method
+		// dobbiamo sempre chiamare questi metodi sotto prima di getMethod()
+		// Settano il numero di variabili locali e gli elementi dello stack usato dal codice del metodo
 		methodGen.setMaxStack();
 		methodGen.setMaxLocals();
 
-		// we add a method to the class that we are generating
+		// aggiungiamo il metodo alla classe che stiamo generando
 		this.addMethod(methodGen.getMethod());
 	}
 

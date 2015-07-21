@@ -11,7 +11,7 @@ import errorMsg.ErrorMsg;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-// E' un contenitore di ambienti( l'ambiente è tutto ciò che ci serve per fare l'analisi semantica delle ESPRESSIONI, 
+// E' un contenitore di ambienti( l'ambiente - tutto  che ci serve per fare l'analisi semantica delle ESPRESSIONI, 
 // al momento) 
 
 public class TypeChecker {
@@ -116,7 +116,7 @@ public class TypeChecker {
 	 */
 
 	public TypeChecker putVar(String var, Type type) {
-		// segna che nel nuovo type-checker il numero di variabili locali è uno in più
+		// segna che nel nuovo type-checker il numero di variabili locali e uno in piu
 		// rispetto a questo type-checker
 		return new TypeChecker(returnType,
 			env.put(var, new TypeAndNumber(type, varNum)), varNum + 1, errorMsg, testing);

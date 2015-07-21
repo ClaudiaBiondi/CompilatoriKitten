@@ -42,8 +42,8 @@ public abstract class ComparisonBinOp extends BinOp {
 	 */
 
 	@Override
-	public Block translateAsTest(Block yes, Block no) {
-		// we compute the least common supertype of the two sides of this binary expression
+	public Block translateForTesting(Block yes, Block no) {
+		//compariamo l''ultimo supertipo comune delle due parti dell'espressione binaria
 		Type type = getLeft().getStaticType().leastCommonSupertype(getRight().getStaticType());
 
 		return getLeft().translateAs(type,getRight().translateAs(type,

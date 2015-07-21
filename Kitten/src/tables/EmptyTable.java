@@ -12,7 +12,7 @@ final class EmptyTable<E> extends Table<E> {
 
 	@Override
 	public E get(String key) {
-		return null;  // non c'è chiave in questa tabella vuota
+		return null;  // non c'e chiave in questa tabella vuota
 	}
 
 	@Override

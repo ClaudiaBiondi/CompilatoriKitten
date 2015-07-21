@@ -32,5 +32,6 @@ public abstract class NonBranchingBytecode extends Bytecode {
 	 * @return the Java bytecode(s) corresponding to this Kitten bytecode
 	 */
 
+	//instructionList rappresenta una classe BCEL che rappresenta una sequenza eventualmente vuota di bytecode java
 	public abstract InstructionList generateJavaBytecode(JavaClassGenerator classGen);
 }

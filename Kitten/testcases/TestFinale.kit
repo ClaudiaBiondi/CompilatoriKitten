@@ -1,0 +1,31 @@
+class TestFinale {
+    field int valore
+    field String messaggio
+    
+    test funziono
+        assert(1 = 1)
+    
+    test funziono1
+        assert((2 + 2) = 5)
+
+    constructor(){}
+     
+    method void benvenuto()
+        "Welcome".output()
+    
+    method void setMsg(String message)
+        this.messaggio := message
+       
+    method void setVal(int valore)
+        this.valore := valore 
+    
+    method void parla()
+        this.meassaggio.output()
+
+    method void main(){
+    TestFinale tf := new TestFinale();
+    tf.messaggio := "oki";
+    "tutto ok!\n".output()
+
+    }
+    

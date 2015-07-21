@@ -52,16 +52,26 @@ public class Assert extends Command {
 	}
 
 	@Override
+	//con translate costruiamo un blocco per assert dato che il bytecode di kitten
+	//e un grafo di blocchi di codice contenente codice sequenziale
+	
 	public Block translate(Block continuation) {
 		String out = makeFailureMessage();
-		
+		//creo il blocco (non ha predecessori ne sucessori)
 		Block failed = new Block(new RETURN(IntType.INSTANCE));
-		failed = new CONST(-1).followedBy(failed);
+		failed = new CONST(-1).followedBy(failed); //aggiungiamo i vari elementi sopra al blocco failed 
+		
+		
+		//virtualcall chiama il metodo output e parametri formali di tipo t risalendo nella catena delle superclassi
+		//il ricevitore e e i parametri attuali della chiamata si trovano nello stack al momento della chiamata
+		// vengono sostituiti alla fine con il valore di ritorno del metodo
 		failed = new VIRTUALCALL(ClassType.mkFromFileName("String.kit"),
 			ClassType.mkFromFileName("String.kit").methodLookup("output", TypeList.EMPTY)).followedBy(failed);
 		failed = new NEWSTRING(out).followedBy(failed);
-
-		return asserted.translateAsTest(continuation, failed);
+		
+		//traduce l'espressione assumendo che sia di tipo boolean (garantito precedentemente da type-checking)
+		return asserted.translateForTesting(continuation, failed);
+		//prende continuation oppure il blocco failed che abbiamo costruito
 	}
 	
 	private String makeFailureMessage() {

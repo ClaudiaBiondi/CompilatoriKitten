@@ -91,14 +91,13 @@ public class While extends Command {
 
 	@Override
 	protected TypeChecker typeCheckAux(TypeChecker checker) {
-		// the condition of the loop must be a Boolean expression
+		// la condizione del ciclo deve essere booleana
 		condition.mustBeBoolean(checker);
 
-		// we type-check the body of this command.
-		// Note that the resulting type-checker is not used
+		// il type checker risultante non viene usato
 		body.typeCheck(checker);
 
-		// local declarations in the body of the loop are lost after the loop
+		// le dichiarazioni locali nel corpo del ciclo sono perse dopo il ciclo
 		return checker;
 	}
 
@@ -128,7 +127,7 @@ public class While extends Command {
 	 */
 
 	public Block translate(Block continuation) {
-		/* The idea is to translate a while command into the code
+		/* tradurre un comando while nel codice
 
 	    condition -> (no) continuation
 	    | (yes) ^
@@ -136,16 +135,16 @@ public class While extends Command {
 	    body ----
 		 */
 
-		// we create an empty block which is used to close the loop
+		//creiamo un blocco vuoto usato per chiudere il blocco
 		Block pivot = new Block();
 
-		// we translate the condition of the loop. If the condition is true, we execute
-		// the translation of the body. Otherwise we execute what follows this command
-		Block result = condition.translateAsTest(body.translate(pivot), continuation);
+		// Traduciamo la condizione del loop. Se vera, eseguiamo la traduzione
+		// altrimenti andiamo avanti
+		Block result = condition.translateForTesting(body.translate(pivot), continuation);
 
 		result.doNotMerge();
 
-		// we link the pivot to the code which tests the condition, so that we close the loop
+		// liankiamo il pivot al codice che testa la condizione e chiudiamo il loop
 		pivot.linkTo(result);
 
 		return result;

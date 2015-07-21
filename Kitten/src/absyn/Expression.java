@@ -224,7 +224,8 @@ public abstract class Expression extends Absyn {
 	 *         {@code yes} or {@code no} continuation, respectively
 	 */
 
-	public Block translateAsTest(Block yes, Block no) {
+	// il controllo viene instradato in una delle due possibili soluzioni da assert tramite un bytecode IF_TRUE()
+	public Block translateForTesting(Block yes, Block no) {
 		return translate(new Block(new IF_TRUE(), yes, no));
 	}
 

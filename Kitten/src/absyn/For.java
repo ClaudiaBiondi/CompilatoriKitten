@@ -94,27 +94,25 @@ public class For extends Command {
 
     @Override
     protected TypeChecker typeCheckAux(TypeChecker checker) {
-    	// we consider the type-checker resulting from type-checking
-    	// the initialisation component. By using this
-    	// new type-checker in the following checks, we allow local variables
-    	// defined in the initialisation< component to be visible
-    	// in the other components of the for command
+    	// Consideriamo il tipo ortografico risultante da type-checking
+        // Il componente inizializzazione . Utilizzando questo
+        // Nuovo tipo ortografico nei seguenti controlli , permettiamo variabili locali
+        // Definito nella inizializzazione < componente sia visibile
+        // Nelle altre componenti per il comando
     	TypeChecker initChecker = initialisation.typeCheck(checker);
 
-    	// we check that the condition component has Boolean type
     	condition.mustBeBoolean(initChecker);
 
-    	// we type-check the update component. Note that the
-    	// resulting type-checker is not used, so that local declarations
-    	// in the update field are not visible outside that field
+    	// facciamo type-check dell componente di aggiornamento . Si noti che il
+        // Risultante tipo ortografico non viene utilizzato , in modo che le dichiarazioni locali
+        // Nel campo aggiornamento non sono visibili dall'esterno quel campo
     	update.typeCheck(initChecker);
 
-    	// we type-check the body of this command.
-    	// Note that the resulting type-checker is not used
+    	// type-check del corpo di questo comando .
+        // Si noti che il risultante tipo checker non viene utilizzato
     	body.typeCheck(initChecker);
 
-    	// we return the original type-checker, so that local declarations in
-    	// the initialisation, update and body components are not visible after the loop
+    	// ritorniamo il type-checker originale
     	return checker;
     }
 
@@ -167,14 +165,14 @@ public class For extends Command {
                             body -> update
     	 */
 
-    	// we create an empty block which is used to close the loop
+    	
     	Block pivot = new Block();
 
     	// we translate the condition of the loop. If the condition is true,
     	// we execute the translation of the body and then the update.
     	// Otherwise we execute what follows this command. This code will be
     	// used to translate the initialisation component
-    	Block test = condition.translateAsTest(body.translate(update.translate(pivot)), continuation);
+    	Block test = condition.translateForTesting(body.translate(update.translate(pivot)), continuation);
 
     	test.doNotMerge();
 

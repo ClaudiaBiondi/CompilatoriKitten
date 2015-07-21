@@ -64,7 +64,7 @@ public class Block {
 	 */
 	
 	// Il costruttore chiede di specificare la lista di bytecode contenuta nel blocco e la lista
-	// di sucessori del blocco (può essere anche vuota)
+	// di sucessori del blocco (puo essere anche vuota)
 	private Block(BytecodeList bytecode, List<Block> follows) {
 		this.bytecode = bytecode;
 		this.follows = follows;
@@ -101,7 +101,7 @@ public class Block {
 	public Block(BranchingBytecode condition, Block yes, Block no) {
 		this(new BytecodeList(new NOP()), new ArrayList<Block>());
 
-		// we prefix the condition and its negation to the code of the following blocks
+		// fissiamo la condizione e la sua negazione al codice del blocco seguente
 		follows.add(no.prefixedBy(condition.negate()));
 		follows.add(yes.prefixedBy(condition));
 	}
@@ -112,10 +112,11 @@ public class Block {
 	 */
 
 	public Block() {
-		// we use nop for the initial code of a pivot
+		// usiamo nop per il codice iniziale del pivot
+		
 		this(new BytecodeList(new NOP()), new ArrayList<Block>());
 
-		// a pivot cannot be merged, otherwise cycles cannot be built
+		// un pivot non puo essere unito, altrimenti cicli non possono essere costruiti
 		mergeable = false;
 	}
 
@@ -202,8 +203,8 @@ public class Block {
 	 */
 
 	public Block prefixedBy(Bytecode bytecode) {
-		// we can expand our code if we have no predecessors,
-		// or otherwise we will also affect the view that our predecessors have of us
+		// non possiamo espandere il codice se non abbiamo predecessori
+		// oppure altrimenti andiamo ad agire sulla vista che il predecessore aveva di noi
 		if (mergeable) {
 			this.bytecode = new BytecodeList(bytecode).append(this.bytecode);
 			return this;
@@ -232,7 +233,7 @@ public class Block {
 
 	
 	void cleanUp(Program program) {
-		// the start method of the program is definitely called
+		// il metodo chiamato  di partenza del programma 
 		program.getSigs().add(program.getStart());
 		cleanUp(new HashSet<Block>(), program);
 	}
@@ -252,7 +253,7 @@ public class Block {
 
 			List<Block> newFollows = new ArrayList<>();
 
-			// we consider each successor and remove isolated nop's
+			// consideriamo ogni sucessore e rimuoviamo nop isolati
 			for (Block follow: follows)
 				if (follow != this && follow.bytecode.getHead() instanceof NOP &&
 				follow.bytecode.getTail() == null)
@@ -262,21 +263,21 @@ public class Block {
 
 			follows = newFollows;
 
-			// we continue with the successors
+			// continuiamo con i sucessori
 			for (Block follow: follows)
 				follow.cleanUp(done,program);
 
-			// if the bytecode contains a reference to a field or to a
-			// constructor or to a method, we add it to the signatures
-			// for the program and update its statistics
+			// se il bytecode contiene un riferimento al campo o al costruttore o a un metodo
+			// lo aggiungiamo alle firme del programma e aggiorniamo le statistiche
+			
 			for (BytecodeList bs = bytecode; bs != null; bs = bs.getTail()) {
 				Bytecode bytecode = bs.getHead();
 
-				// we take note that the program contains the bytecodes in the block
+				// prendiamo nota che il programma contiene bytecodes nel blocco
 				program.storeBytecode(bytecode);
 
 				if (bytecode instanceof CALL)
-					// we continue by cleaning the dynamic targets
+					// continuamo pulendo i target dinamici
 					for (CodeSignature target: ((CALL) bytecode).getDynamicTargets())
 						target.getCode().cleanUp(done,program);
 			}

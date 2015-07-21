@@ -84,7 +84,7 @@ public class ErrorMsg {
 	 */
 
 	public void error(int pos, String msg) {
-		anyErrors = true; // c'è almeno un errore
+		anyErrors = true; // esiste almeno un errore
 
 		String where;
 		if (pos >= 0) {

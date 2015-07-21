@@ -10,8 +10,8 @@ import org.apache.bcel.generic.InstructionList;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-// Implementa una lista di bytecode che può essere inserita in un blocco di codice (la struttura che implementa tale blocco 
-// è translation/Block.java
+// Implementa una lista di bytecode che puo essere inserita in un blocco di codice (la struttura che implementa tale blocco 
+// e translation/Block.java
 
 public class BytecodeList {
 
@@ -98,8 +98,8 @@ public class BytecodeList {
     		s = s.substring(0,100) + "...";
 
     	if (tail != null)
-    		// if some bytecode yields the empty string, we do no print a new linbe.
-    		// This can be useful for bytecodes that disappear from the print-out
+    		// se campi bytecode sono stringhe vuote, non stampiamo nessuna new line
+    		// puo essere utile per i bytecode che spariscono dal print-out
     		if (s.length() > 0)
     			return s + "\n" + tail.toString();
     		else
@@ -121,17 +121,18 @@ public class BytecodeList {
     	InstructionList result;
 
     	if (head instanceof NonBranchingBytecode)
-    		// we generate the Java bytecode for the first bytecode
-    		// if it is not a condition of a branch
+    		// generaimo il java bytecode dal primo bytecode
+    		// se non e una condizione di un ramo 
+    		
     		result = ((NonBranchingBytecode) head).generateJavaBytecode(classGen);
     	else
     		result = new InstructionList();
 
-    	// and for its followers, if any
+    	// per i successori 
     	if (tail != null)
     		result.append(tail.generateJavaBytecode(classGen));
 
-    	// if we added no instruction, we add a fictitious one so that we never return an empty list
+    	// se non aggiungiamo nessuna istruzione , aggiungiamo una fittizia per non far ritornare mai una lista vuota
     	if (result.isEmpty())
     		result.append(new org.apache.bcel.generic.NOP());
 

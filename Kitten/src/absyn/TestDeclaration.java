@@ -89,25 +89,29 @@ public class TestDeclaration extends CodeDeclaration {
 		//facciamo il type-check del corpo del test nel risultante type-checking
 		getBody().typeCheck(checker);
 
-		// notiamo che non c'èdead-code nel corpo del test
+		// notiamo che non c'e dead-code nel corpo del test
 		getBody().checkForDeadcode();
 		
-		// i test ritornano nulla, così che non dobbiamo notare
-		// se è sempre presente un return alla fine di ogni percorso di esecuzione sintattica
+		// i test ritornano nulla, cosi che non dobbiamo notare
+		// se e sempre presente un return alla fine di ogni percorso di esecuzione sintattica
 		// nel corpo del test
 		
 	}
 
+	
 	public void translate(Set<ClassMemberSignature> done) {
 		if (done.add(getSignature())) {
-			translate2(getSignature().getDefiningClass(),done);
+			translateAux(getSignature().getDefiningClass(),done);
 			Block post = new Block(new RETURN(IntType.INSTANCE));
 			post = new CONST(0).followedBy(post);
+			//prendiamo il metodo output 
 			post = new VIRTUALCALL(ClassType.mkFromFileName("String.kit"),
 					ClassType.mkFromFileName("String.kit").methodLookup("output", TypeList.EMPTY))
 			.followedBy(post);
+			//utile per stampare la stringa "Assert passsed"
 			post = new NEWSTRING("passed").followedBy(post);	
 			getSignature().setCode(getBody().translate(post));
+			//traduce in kitten bytecode tutti i membri della classe a cui fa riferimento il blocco 
 			translateReferenced(getSignature().getCode(), done, new HashSet<Block>());
 		}
 	}
