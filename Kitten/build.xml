@@ -189,7 +189,7 @@
 	</target>
 	
 	<target name="run-test-code" depends="run-java-bytecode-generator">
-		        <java classname="${kitten.example}" >
+		        <java classname="${kitten.example}Test" >
 		            <classpath>
 		                <pathelement location="${build.out.folder}"/>
 		                <pathelement location="${kitten.example.dir}"/>
