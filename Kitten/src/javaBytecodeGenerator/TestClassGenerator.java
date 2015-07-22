@@ -61,7 +61,7 @@ public class TestClassGenerator extends JavaClassGenerator {
 			InstructionList ilTest;
 			
 			// creiamo il test
-			ilTest = pgTest(test, clazz.getFixtures());
+			ilTest = finalTest(test, clazz.getFixtures());
 			
 			// salviamo il risultato (0: passed, -1:failed)
 			ilTest.append(InstructionFactory.ILOAD_1);
@@ -69,7 +69,7 @@ public class TestClassGenerator extends JavaClassGenerator {
 			ilTest.append(InstructionFactory.ISTORE_1);
 
 			// stampiamo il tempo 
-			pgTime(ilTest);
+			finalTime(ilTest);
 			
 			iList.append(ilTest);
 		}
@@ -90,7 +90,7 @@ public class TestClassGenerator extends JavaClassGenerator {
 				org.apache.bcel.Constants.INVOKEVIRTUAL
 		));
 		
-		iList.append(pgPrint(" test(s) passed, "));
+		iList.append(finalPrint(" test(s) passed, "));
 		
 		// # tests failed
 		iList.append(getFactory().createGetStatic("java/lang/System", "out", 
@@ -105,9 +105,9 @@ public class TestClassGenerator extends JavaClassGenerator {
 				org.apache.bcel.Constants.INVOKEVIRTUAL
 		));
 		
-		iList.append(pgPrint(" failed "));
+		iList.append(finalPrint(" failed "));
 		
-		pgTime(iList);
+		finalTime(iList);
 
 		iList.append(InstructionFactory.createReturn(Type.VOID));	
 		
@@ -145,7 +145,7 @@ public class TestClassGenerator extends JavaClassGenerator {
 		);
 	}
 	
-	private void pgTime(InstructionList il) {
+	private void finalTime(InstructionList il) {
 		InstructionList prima = new InstructionList();
 		prima.append(getFactory().createGetStatic("java/lang/System", "out", Type.getType(java.io.PrintStream.class)));
 		prima.append(currentMillis());
@@ -155,7 +155,7 @@ public class TestClassGenerator extends JavaClassGenerator {
 		dopo.append(InstructionConstants.LSUB);
 		dopo.append(InstructionConstants.LNEG);
 		dopo.append(InstructionConstants.L2I);
-		dopo.append(pgPrint(" ["));
+		dopo.append(finalPrint(" ["));
 		dopo.append(getFactory().createInvoke(
 				"java/io/PrintStream", 
 				"print", 
@@ -163,14 +163,14 @@ public class TestClassGenerator extends JavaClassGenerator {
 				new org.apache.bcel.generic.Type[]{org.apache.bcel.generic.Type.INT},
 				org.apache.bcel.Constants.INVOKEVIRTUAL
 		));
-		dopo.append(pgPrint("ms]\n"));
+		dopo.append(finalPrint("ms]\n"));
 		
 		il.insert(prima);
 		il.append(dopo);
 
 	}
 
-	private InstructionList pgPrint(String msg) {
+	private InstructionList finalPrint(String msg) {
 		InstructionList il = new InstructionList();
 		il.append(getFactory().createGetStatic("java/lang/System", "out", 
 				Type.getType(java.io.PrintStream.class)));
@@ -186,9 +186,9 @@ public class TestClassGenerator extends JavaClassGenerator {
 		return il;
 	}
 	
-	private InstructionList pgTest(TestSignature test, Set<FixtureSignature> fixtures) {
+	private InstructionList finalTest(TestSignature test, Set<FixtureSignature> fixtures) {
 		InstructionList il = new InstructionList();
-		il.append(pgPrint("\t- Test: " + test.getName() + " "));
+		il.append(finalPrint("\t- Test: " + test.getName() + " "));
 		
 		// Creo un nuovo oggetto
 		il.append(getFactory().createNew(this.clazz.getName()));
